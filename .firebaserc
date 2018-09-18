@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "auth-caadb"
+    "default": "auth-caadb",
+    "development": "auth-caadb"
   }
 }

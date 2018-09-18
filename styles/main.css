@@ -1,0 +1,81 @@
+body,html {
+    /* color: Black; */
+}
+.divider {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.233);
+    width: 100%;
+}
+
+.mdl-grid {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.material-icons {
+    font-size: 36px;
+    top: 8px;
+    position: relative;
+}
+
+.mdl-layout__header-row {
+    padding: 0;
+    margin: 0 auto;
+}
+
+#user-container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    top: 22px;
+    width: 100%;
+    right: 0;
+    padding-left: 10px;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+#user-container #user-pic {
+    top: -3px;
+    position: relative;
+    display: inline-block;
+    background-image: url('/images/profile_placeholder.png');
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    background-size: 50px;
+    border-radius: 25px;
+}
+
+#user-container #user-name {
+    font-size: 16px;
+    line-height: 36px;
+    padding-right: 10px;
+    padding-left: 20px;
+}
+
+#sign-in .material-icons {
+    top: 0px;
+    padding: 5px;
+}
+@media screen and (max-width: 610px) {
+    header {
+        height: 113px;
+        padding-bottom: 80px !important;
+        word-break: keep-all;
+    }
+    #user-container {
+        top: 72px;
+        background-color: rgb(255, 255, 255);
+        height: 38px;
+        padding-top: 3px;
+        padding-right: 2px;
+        text-align: center;
+    }
+
+    #user-container #user-pic {
+        top: 2px;
+        width: 33px;
+        height: 33px;
+        background-size: 33px;
+    }
+}

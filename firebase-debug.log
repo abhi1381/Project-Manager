@@ -1,0 +1,13 @@
+[debug] [2018-09-18T18:48:01.167Z] ----------------------------------------------------------------------
+[debug] [2018-09-18T18:48:01.167Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\hp\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-09-18T18:48:01.167Z] CLI Version:   4.2.1
+[debug] [2018-09-18T18:48:01.167Z] Platform:      win32
+[debug] [2018-09-18T18:48:01.167Z] Node Version:  v8.9.3
+[debug] [2018-09-18T18:48:01.167Z] Time:          Wed Sep 19 2018 00:18:01 GMT+0530 (India Standard Time)
+[debug] [2018-09-18T18:48:01.167Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-18T18:48:01.183Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-18T18:48:01.183Z] > authorizing via signed-in user
+[debug] [2018-09-18T18:48:01.198Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-18T18:48:01.198Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+

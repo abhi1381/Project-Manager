@@ -9,16 +9,20 @@
       "database-rules.json",
       "storage.rules",
       "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=0"
+          }
+        ]
+      }
     ]
   },
   "storage": {
     "rules": "storage.rules"
-  },
-  "headers": [{
-    "source": "**/*.@(js|html)",
-    "headers": [{
-      "key": "Cache-Control",
-      "value": "max-age=0"
-    }]
-  }]
+  }
 }
