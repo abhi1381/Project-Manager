@@ -1,108 +1,354 @@
-'use strict';
+"use strict";
 
 // Signs-in
 function signIn() {
-    // Sign in Firebase using popup auth and Google as the identity provider.
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
+  // Sign in Firebase using popup auth and Google as the identity provider.
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider);
 }
 
 // Signs-out
 function signOut() {
-    firebase.auth().signOut();
+  firebase.auth().signOut();
 }
 
 // Initiate firebase auth.
 function initFirebaseAuth() {
-    firebase.auth().onAuthStateChanged(authStateObserver);
+  firebase.auth().onAuthStateChanged(authStateObserver);
 }
 
 // Returns the signed-in user's profile Pic URL.
 function getProfilePicUrl() {
-    return firebase.auth().currentUser.photoURL || '/images/profile_placeholder.png';
+  return (
+    firebase.auth().currentUser.photoURL || "/images/profile_placeholder.png"
+  );
 }
 
 // Returns the signed-in user's display name.
 function getUserName() {
-    return firebase.auth().currentUser.displayName;
+  return firebase.auth().currentUser.displayName;
 }
 
 // Returns true if a user is signed-in.
 function isUserSignedIn() {
-    return !!firebase.auth().currentUser;
+  return !!firebase.auth().currentUser;
 }
+
+// Loads chat messages history and listens for upcoming ones.
+function loadProjects() {
+  // Loads the last 12 messages and listen for new ones.
+  var callback = function(snap) {
+    var data = snap.val();
+    displayProjects(
+      snap.key,
+      data.name,
+      data.title,
+      data.imageUrl,
+      data.description,
+      data.profilePicUrl
+    );
+    openModal(snap.key);
+  };
+
+  firebase
+    .database()
+    .ref("/projects/")
+    .on("child_added", callback);
+  firebase
+    .database()
+    .ref("/projects/")
+    .on("child_changed", callback);
+}
+
+// Saves a new project on the Firebase DB.
+function saveProjects(projectObject) {
+  // Add a new message entry to the Firebase Database.
+  return firebase
+    .database()
+    .ref("/projects/")
+    .push({
+      name: getUserName(),
+      title: projectObject.projectTitle,
+      imageUrl: projectObject.imageUrl,
+      description: projectObject.Textarea1,
+      profilePicUrl: getProfilePicUrl()
+    })
+    .catch(function(error) {
+      console.error("Error writing new message to Firebase Database", error);
+    });
+}
+
+function onProjectFormSubmit(e) {
+  e.preventDefault();
+  // Check that the user entered a message and is signed in.
+  if (checkSignedInWithMessage()) {
+    saveProjects({
+      projectTitle: projectTitle.value,
+      imageUrl: url.value,
+      Textarea1: Textarea1.value
+    }).then(function() {
+      // Clear message text field and re-enable the SEND button.
+      resetMaterialTextfield({
+        projectTitle,
+        url,
+        Textarea1
+      });
+    });
+  }
+}
+
+// function openModal() {
+
+// }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
-    if (user) { // User is signed in!
-        // Get the signed-in user's profile pic and name.
-        var profilePicUrl = getProfilePicUrl();
-        var userName = getUserName();
+  if (user) {
+    // User is signed in!
+    // Get the signed-in user's profile pic and name.
+    var profilePicUrl = getProfilePicUrl();
+    var userName = getUserName();
 
-        // Set the user's profile pic and name.
-        userPicElement.style.backgroundImage = 'url(' + profilePicUrl + ')';
-        userNameElement.textContent = userName;
+    // Set the user's profile pic and name.
+    userPicElement.style.backgroundImage = "url(" + profilePicUrl + ")";
+    userNameElement.textContent = userName;
 
-        // Show user's profile and sign-out button.
-        userNameElement.removeAttribute('hidden');
-        userPicElement.removeAttribute('hidden');
-        signOutButtonElement.removeAttribute('hidden');
+    // Show user's profile and sign-out button.
+    userNameElement.removeAttribute("hidden");
+    userPicElement.removeAttribute("hidden");
+    signOutButtonElement.removeAttribute("hidden");
 
-        // Hide sign-in button.
-        signInButtonElement.setAttribute('hidden', 'true');
+    // Hide sign-in button.
+    signInButtonElement.setAttribute("hidden", "true");
+  } else {
+    // User is signed out!
+    // Hide user's profile and sign-out button.
+    userNameElement.setAttribute("hidden", "true");
+    userPicElement.setAttribute("hidden", "true");
+    signOutButtonElement.setAttribute("hidden", "true");
 
-    } else { // User is signed out!
-        // Hide user's profile and sign-out button.
-        userNameElement.setAttribute('hidden', 'true');
-        userPicElement.setAttribute('hidden', 'true');
-        signOutButtonElement.setAttribute('hidden', 'true');
-
-        // Show sign-in button.
-        signInButtonElement.removeAttribute('hidden');
-    }
+    // Show sign-in button.
+    signInButtonElement.removeAttribute("hidden");
+  }
 }
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
 function checkSignedInWithMessage() {
-    // Return true if the user is signed in Firebase
-    if (isUserSignedIn()) {
-        return true;
-    }
+  // Return true if the user is signed in Firebase
+  if (isUserSignedIn()) {
+    return true;
+  }
 
-    // Display a message to the user using a Toast.
-    var data = {
-        message: 'You must sign-in first',
-        timeout: 2000
-    };
-    signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
-    return false;
+  // Display a message to the user using a Toast.
+  var data = {
+    message: "You must sign-in first",
+    timeout: 2000
+  };
+  signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+  signInSnackbarElement.style.backgroundColor = "#e65100";
+  signInSnackbarElement.style.left = "10%";
+
+  return false;
+}
+
+// Resets the given MaterialTextField.
+function resetMaterialTextfield(element) {
+  element.projectTitle.value = " ";
+  element.projectTitle.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+  element.url.value = " ";
+  element.url.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+  element.Textarea1.value = " ";
+  element.Textarea1.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+}
+
+// modals and cards
+// A loading image URL.
+var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
+
+// project submit dialog
+(function() {
+  "use strict";
+  var dialogButton = document.querySelector("#show-dialog");
+  var dialog = document.querySelector("#dialog");
+  if (!dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+
+  dialogButton.addEventListener("click", function() {
+    if (checkSignedInWithMessage()) {
+      dialog.showModal();
+    }
+  });
+
+  dialog.querySelector("#closeModal").addEventListener("click", function() {
+    dialog.close();
+  });
+})();
+
+// show project dialog
+var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--6dp mdl-cell--4-col">
+                        <div class="mdl-card__title mdl-card--expand smallTitle"></div>
+                        <div class="mdl-card__actions">
+                        <button class="readMore mdl-button mdl-color--black" style="color: white">READ MORE...</button>
+                        </div>
+                        </div>`;
+
+function makeCard(key, title, imageUrl) {
+  var div = document.getElementById(key);
+  if (!div) {
+    if (title && imageUrl) {
+      var container = document.createElement("div");
+      container.innerHTML = smallCardTemplate;
+      div = container.firstChild;
+      var smallTitle = div.querySelector(".smallTitle");
+      smallTitle.textContent = title;
+      smallTitle.style.color = "white";
+      smallTitle.style.fontWeight = "600";
+      smallTitle.style.fontSize = "2em";
+      smallTitle.style.textDecoration = "underline";
+
+      div.style.margin = "5px";
+      div.style.backgroundImage = "url(" + imageUrl + ")";
+      div.setAttribute(
+        "class",
+        `${key} demo-card-image mdl-card mdl-shadow--6dp mdl-cell--4-col`
+      );
+      cardGrid.appendChild(div);
+    }
+  }
+}
+
+function openModal(key) {
+  "use strict";
+  var readmoreButton = document.querySelector(".readMore");
+  var dialogShow = document.querySelector(`dialog[id=${key}]`);
+  console.log(typeof key, readmoreButton, dialogShow);
+
+  if (!dialogShow.showModal) {
+    dialogPolyfill.registerDialog(dialogShow);
+  }
+
+  readmoreButton.addEventListener("click", function() {
+    dialogShow.showModal();
+  });
+  dialogShow.querySelector(".closeModal").addEventListener("click", function() {
+    dialogShow.close();
+  });
+}
+
+// Template for readmore dialog
+var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
+                            <h4 class = "mdl-dialog__title title"></h4>
+                            <div class="projectImage"></div> 
+                            <div class = "mdl-dialog__content">
+                            <p class="description"></p> 
+                            </div> 
+                            <div class = "mdl-dialog__actions">
+                            <div class="name"></div>
+                            <div class="pic"></div>
+                            <button type = "button" class = "mdl-button closeModal">NEXT</button> 
+                            <button type = "button" class = "mdl-button close">DELETE</button> 
+                            </div> 
+                            </dialog>`;
+
+// Displays a Message in the UI.
+function displayProjects(
+  key,
+  name,
+  title,
+  imageUrl,
+  description,
+  profilePicUrl
+) {
+  makeCard(key, title, imageUrl);
+
+  var div = document.getElementById(key);
+  // If an element for that message does not exists yet we create it.
+  if (!div) {
+    var container = document.createElement("div");
+    container.innerHTML = readMoreDialogTemplate;
+    div = container.firstChild;
+    div.setAttribute("id", key);
+    cardGrid.appendChild(div);
+  }
+  if (profilePicUrl) {
+    div.querySelector(".pic").style.backgroundImage =
+      "url(" + profilePicUrl + ")";
+  }
+
+  div.querySelector(".name").textContent = name;
+  var Title = div.querySelector(".title");
+  var Description = div.querySelector(".description");
+  var image = document.createElement("img");
+  var projectImage = div.querySelector(".projectImage");
+  //   var bigDialog = div.getElementsByClassName("bigDialog");
+  Title.textContent = title;
+  Description.textContent = description;
+  //   image.addEventListener("load", function() {
+  //     bigDialog.scrollTop = bigDialog.scrollHeight;
+  //   });
+
+  image.src = imageUrl;
+  projectImage.innerHTML = " ";
+  projectImage.appendChild(image);
+  // Replace all line breaks by <br>.
+  Title.innerHTML = Title.innerHTML.replace(/\n/g, "<br>");
+  Description.innerHTML = Description.innerHTML.replace(/\n/g, "<br>");
+  // Show the card fading-in and scroll to view the new message.
+  //   setTimeout(function() {
+  //     div.classList.add("visible");
+  //   }, 1);
+  //   bigDialog.scrollTop = bigDialog.scrollHeight;
+  url.focus();
+  Textarea1.focus();
+  projectTitle.focus();
 }
 
 // Checks that the Firebase SDK has been correctly setup and configured.
 function checkSetup() {
-    if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
-        window.alert('You have not configured and imported the Firebase SDK. ' +
-            'Make sure you go through the codelab setup instructions and make ' +
-            'sure you are running the codelab using `firebase serve`');
-    }
+  if (
+    !window.firebase ||
+    !(firebase.app instanceof Function) ||
+    !firebase.app().options
+  ) {
+    window.alert(
+      "You have not configured and imported the Firebase SDK. " +
+        "Make sure you go through the codelab setup instructions and make " +
+        "sure you are running the codelab using `firebase serve`"
+    );
+  }
 }
 
 // Checks that Firebase has been imported.
 checkSetup();
 
 // Shortcuts to DOM Elements.
-var userPicElement = document.getElementById('user-pic');
-var userNameElement = document.getElementById('user-name');
-var signInButtonElement = document.getElementById('sign-in');
-var signOutButtonElement = document.getElementById('sign-out');
-var signInSnackbarElement = document.getElementById('must-signin-snackbar');
-
+var userPicElement = document.getElementById("user-pic");
+var userNameElement = document.getElementById("user-name");
+var signInButtonElement = document.getElementById("sign-in");
+var signOutButtonElement = document.getElementById("sign-out");
+var signInSnackbarElement = document.getElementById("must-signin-snackbar");
+var container = document.querySelector("#container");
+var closeModal = document.querySelector("#closeModal");
+var cardBack = document.querySelector(".demo-card-image.mdl-card");
+var cardGrid = document.querySelector("#cardGrid");
+var url = document.getElementById("imageUrl");
+var Textarea1 = document.getElementById("Textarea1");
+var projectTitle = document.getElementById("projecttitle");
+var projectform = document.querySelector("#projectform");
+// var readMoreDialog = document.querySelectorAll(".bigDialog");
+// var readmore = document.querySelectorAll(".readMore");
 
 // auth
-signOutButtonElement.addEventListener('click', signOut);
-signInButtonElement.addEventListener('click', signIn);
+signOutButtonElement.addEventListener("click", signOut);
+signInButtonElement.addEventListener("click", signIn);
 
+// listeners
+projectform.addEventListener("submit", onProjectFormSubmit);
+closeModal.addEventListener("click", makeCard);
 
 // initialize Firebase
 initFirebaseAuth();
 
+// We load currently existing projects and listen to new ones.
+loadProjects();
