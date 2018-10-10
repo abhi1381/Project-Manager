@@ -48,6 +48,7 @@ function loadProjects() {
       data.profilePicUrl
     );
     openModal(snap.key);
+    // Delete(snap.key);
   };
 
   firebase
@@ -96,10 +97,6 @@ function onProjectFormSubmit(e) {
     });
   }
 }
-
-// function openModal() {
-
-// }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
@@ -220,17 +217,20 @@ function makeCard(key, title, imageUrl) {
 
 function openModal(key) {
   "use strict";
-  var readmoreButton = document.querySelector(".readMore");
+  var readmoreButton = document.querySelectorAll(".readMore");
   var dialogShow = document.querySelector(`dialog[id=${key}]`);
-  console.log(typeof key, readmoreButton, dialogShow);
+  // console.log(typeof key, readmoreButton, dialogShow);
 
   if (!dialogShow.showModal) {
     dialogPolyfill.registerDialog(dialogShow);
   }
 
-  readmoreButton.addEventListener("click", function() {
-    dialogShow.showModal();
+  readmoreButton.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      dialogShow.showModal();
+    });
   });
+
   dialogShow.querySelector(".closeModal").addEventListener("click", function() {
     dialogShow.close();
   });
@@ -247,11 +247,11 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             <div class="name"></div>
                             <div class="pic"></div>
                             <button type = "button" class = "mdl-button closeModal">NEXT</button> 
-                            <button type = "button" class = "mdl-button close">DELETE</button> 
+                            <button type = "button" class = "mdl-button remove">DELETE</button> 
                             </div> 
                             </dialog>`;
 
-// Displays a Message in the UI.
+// Displays  in the UI.
 function displayProjects(
   key,
   name,
@@ -281,24 +281,31 @@ function displayProjects(
   var Description = div.querySelector(".description");
   var image = document.createElement("img");
   var projectImage = div.querySelector(".projectImage");
-  //   var bigDialog = div.getElementsByClassName("bigDialog");
   Title.textContent = title;
   Description.textContent = description;
-  //   image.addEventListener("load", function() {
-  //     bigDialog.scrollTop = bigDialog.scrollHeight;
-  //   });
-
   image.src = imageUrl;
   projectImage.innerHTML = " ";
   projectImage.appendChild(image);
   // Replace all line breaks by <br>.
   Title.innerHTML = Title.innerHTML.replace(/\n/g, "<br>");
   Description.innerHTML = Description.innerHTML.replace(/\n/g, "<br>");
-  // Show the card fading-in and scroll to view the new message.
-  //   setTimeout(function() {
-  //     div.classList.add("visible");
-  //   }, 1);
-  //   bigDialog.scrollTop = bigDialog.scrollHeight;
+  // delete a project
+  var removeElement = div.querySelector(".remove");
+  removeElement.addEventListener("click", function(e) {
+    var iD = this.parentNode.parentNode.id;
+    var refDeb = firebase.database().ref(`/projects/${iD}`);
+    refDeb
+      .remove()
+      .then(function() {
+        location.reload();
+        console.log("Remove succeeded.");
+      })
+      .catch(function(error) {
+        console.log("Remove failed: " + error.message);
+      });
+
+    // console.log(e, this.parentNode.parentNode.id, refDeb);
+  });
   url.focus();
   Textarea1.focus();
   projectTitle.focus();
@@ -336,8 +343,6 @@ var url = document.getElementById("imageUrl");
 var Textarea1 = document.getElementById("Textarea1");
 var projectTitle = document.getElementById("projecttitle");
 var projectform = document.querySelector("#projectform");
-// var readMoreDialog = document.querySelectorAll(".bigDialog");
-// var readmore = document.querySelectorAll(".readMore");
 
 // auth
 signOutButtonElement.addEventListener("click", signOut);
@@ -346,6 +351,8 @@ signInButtonElement.addEventListener("click", signIn);
 // listeners
 projectform.addEventListener("submit", onProjectFormSubmit);
 closeModal.addEventListener("click", makeCard);
+
+// delete listener
 
 // initialize Firebase
 initFirebaseAuth();
