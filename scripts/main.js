@@ -183,7 +183,7 @@ var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
 })();
 
 // show project dialog
-var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--6dp mdl-cell--4-col">
+var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--6dp mdl-cell mdl-cell--6-col">
                         <div class="mdl-card__title mdl-card--expand smallTitle"></div>
                         <div class="mdl-card__actions">
                         <button class="readMore mdl-button mdl-color--black" style="color: white">READ MORE...</button>
@@ -203,12 +203,12 @@ function makeCard(key, title, imageUrl) {
       smallTitle.style.fontWeight = "600";
       smallTitle.style.fontSize = "2em";
       smallTitle.style.textDecoration = "underline";
-
       div.style.margin = "5px";
-      div.style.backgroundImage = "url(" + imageUrl + ")";
+      div.style.minHeight = "300px";
+      div.style.background = "url(" + imageUrl + ") center/cover no-repeat";
       div.setAttribute(
         "class",
-        `${key} demo-card-image mdl-card mdl-shadow--6dp mdl-cell--4-col`
+        `${key} demo-card-image mdl-card mdl-shadow--6dp mdl-cell--6-col`
       );
       cardGrid.appendChild(div);
     }
@@ -218,21 +218,23 @@ function makeCard(key, title, imageUrl) {
 function openModal(key) {
   "use strict";
   var readmoreButton = document.querySelectorAll(".readMore");
-  var dialogShow = document.querySelector(`dialog[id=${key}]`);
-  // console.log(typeof key, readmoreButton, dialogShow);
+  var dialogShow = document.querySelectorAll(`dialog[id=${key}]`);
 
-  if (!dialogShow.showModal) {
-    dialogPolyfill.registerDialog(dialogShow);
-  }
-
-  readmoreButton.forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      dialogShow.showModal();
+  dialogShow.forEach(function(dialog) {
+    readmoreButton.forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        // console.log(this, btn.parentNode.parentNode.classList[0], dialog.id);
+        if (btn.parentNode.parentNode.classList[0] === dialog.id) {
+          dialog.showModal();
+        }
+      });
     });
-  });
-
-  dialogShow.querySelector(".closeModal").addEventListener("click", function() {
-    dialogShow.close();
+    if (!dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+    }
+    dialog.querySelector(".closeModal").addEventListener("click", function() {
+      dialog.close();
+    });
   });
 }
 
@@ -244,9 +246,10 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             <p class="description"></p> 
                             </div> 
                             <div class = "mdl-dialog__actions">
-                            <div class="name"></div>
+                            <div class="name">
+                            </div>
                             <div class="pic"></div>
-                            <button type = "button" class = "mdl-button closeModal">NEXT</button> 
+                            <button type = "button" class = "mdl-button closeModal">CLOSE</button> 
                             <button type = "button" class = "mdl-button remove">DELETE</button> 
                             </div> 
                             </dialog>`;
@@ -272,40 +275,58 @@ function displayProjects(
     cardGrid.appendChild(div);
   }
   if (profilePicUrl) {
-    div.querySelector(".pic").style.backgroundImage =
-      "url(" + profilePicUrl + ")";
+    div.querySelector(".pic").style.background =
+      "url(" + profilePicUrl + ") 10% 10% / 20px no-repeat";
+    div.querySelector(".pic").style.width = "36px";
+    div.querySelector(".pic").style.backgroundSize = "36px";
+    div.querySelector(".pic").style.borderRadius = "18px";
   }
-
-  div.querySelector(".name").textContent = name;
+  var actions = div.querySelector(".mdl-dialog__actions");
+  actions.style.display = "flex";
+  actions.style.flexDirection = "column";
+  actions.style.textALign = "center";
+  div.querySelector(".name").textContent = `Author ::: ${name}`;
+  // div.querySelector(".name").style.fontStyle = "bold"
   var Title = div.querySelector(".title");
   var Description = div.querySelector(".description");
   var image = document.createElement("img");
   var projectImage = div.querySelector(".projectImage");
   Title.textContent = title;
+  Title.style.padding = "24px 24px 10px 10px";
   Description.textContent = description;
+  Description.style.font = "italic 400 20px/30px Georgia, serif";
   image.src = imageUrl;
   projectImage.innerHTML = " ";
+  image.style.maxWidth = "280px";
+  image.style.margin = "0 5px 10px 0";
+  image.classList.add("mdl-card", "mdl-shadow--4dp");
+  image.style.padding = "5px";
   projectImage.appendChild(image);
   // Replace all line breaks by <br>.
   Title.innerHTML = Title.innerHTML.replace(/\n/g, "<br>");
   Description.innerHTML = Description.innerHTML.replace(/\n/g, "<br>");
   // delete a project
-  var removeElement = div.querySelector(".remove");
-  removeElement.addEventListener("click", function(e) {
-    var iD = this.parentNode.parentNode.id;
-    var refDeb = firebase.database().ref(`/projects/${iD}`);
-    refDeb
-      .remove()
-      .then(function() {
-        location.reload();
-        console.log("Remove succeeded.");
-      })
-      .catch(function(error) {
-        console.log("Remove failed: " + error.message);
-      });
+  if (checkSignedInWithMessage()) {
+    var removeElement = div.querySelector(".remove");
+    removeElement.addEventListener("click", function(e) {
+      var askUser = prompt("Do You Want to Delete this?");
+      if (askUser.toLocaleLowerCase() === "yes") {
+        var iD = this.parentNode.parentNode.id;
+        var refDeb = firebase.database().ref(`/projects/${iD}`);
+        refDeb
+          .remove()
+          .then(function() {
+            location.reload();
+            console.log("Remove succeeded.");
+          })
+          .catch(function(error) {
+            console.log("Remove failed: " + error.message);
+          });
+      }
+      // console.log(e, this.parentNode.parentNode.id, refDeb);
+    });
+  }
 
-    // console.log(e, this.parentNode.parentNode.id, refDeb);
-  });
   url.focus();
   Textarea1.focus();
   projectTitle.focus();

@@ -8,7 +8,8 @@
       "firebase.json",
       "database-rules.json",
       "storage.rules",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      ".gitignore"
     ],
     "headers": [
       {
