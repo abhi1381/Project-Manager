@@ -37,7 +37,7 @@ function isUserSignedIn() {
 // Loads chat messages history and listens for upcoming ones.
 function loadProjects() {
   // Loads the last 12 messages and listen for new ones.
-  var callback = function(snap) {
+  var callback = function (snap) {
     var data = snap.val();
     displayProjects(
       snap.key,
@@ -74,7 +74,7 @@ function saveProjects(projectObject) {
       description: projectObject.Textarea1,
       profilePicUrl: getProfilePicUrl()
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error writing new message to Firebase Database", error);
     });
 }
@@ -87,7 +87,7 @@ function onProjectFormSubmit(e) {
       projectTitle: projectTitle.value,
       imageUrl: url.value,
       Textarea1: Textarea1.value
-    }).then(function() {
+    }).then(function () {
       // Clear message text field and re-enable the SEND button.
       resetMaterialTextfield({
         projectTitle,
@@ -143,7 +143,7 @@ function checkSignedInWithMessage() {
   };
   signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
   signInSnackbarElement.style.backgroundColor = "#e65100";
-  signInSnackbarElement.style.left = "10%";
+  signInSnackbarElement.style.left = "50%";
 
   return false;
 }
@@ -163,7 +163,7 @@ function resetMaterialTextfield(element) {
 var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
 
 // project submit dialog
-(function() {
+(function () {
   "use strict";
   var dialogButton = document.querySelector("#show-dialog");
   var dialog = document.querySelector("#dialog");
@@ -171,13 +171,13 @@ var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
     dialogPolyfill.registerDialog(dialog);
   }
 
-  dialogButton.addEventListener("click", function() {
+  dialogButton.addEventListener("click", function () {
     if (checkSignedInWithMessage()) {
       dialog.showModal();
     }
   });
 
-  dialog.querySelector("#closeModal").addEventListener("click", function() {
+  dialog.querySelector("#closeModal").addEventListener("click", function () {
     dialog.close();
   });
 })();
@@ -220,9 +220,9 @@ function openModal(key) {
   var readmoreButton = document.querySelectorAll(".readMore");
   var dialogShow = document.querySelectorAll(`dialog[id=${key}]`);
 
-  dialogShow.forEach(function(dialog) {
-    readmoreButton.forEach(function(btn) {
-      btn.addEventListener("click", function() {
+  dialogShow.forEach(function (dialog) {
+    readmoreButton.forEach(function (btn) {
+      btn.addEventListener("click", function () {
         // console.log(this, btn.parentNode.parentNode.classList[0], dialog.id);
         if (btn.parentNode.parentNode.classList[0] === dialog.id) {
           dialog.showModal();
@@ -232,7 +232,7 @@ function openModal(key) {
     if (!dialog.showModal) {
       dialogPolyfill.registerDialog(dialog);
     }
-    dialog.querySelector(".closeModal").addEventListener("click", function() {
+    dialog.querySelector(".closeModal").addEventListener("click", function () {
       dialog.close();
     });
   });
@@ -287,6 +287,9 @@ function displayProjects(
   actions.style.textALign = "center";
   div.querySelector(".name").textContent = `Author ::: ${name}`;
   // div.querySelector(".name").style.fontStyle = "bold"
+  div.style.border = "1.5em double orange";
+  div.style.borderRadius = "1.5em";
+  div.style.width = "50vw";
   var Title = div.querySelector(".title");
   var Description = div.querySelector(".description");
   var image = document.createElement("img");
@@ -297,7 +300,9 @@ function displayProjects(
   Description.style.font = "italic 400 20px/30px Georgia, serif";
   image.src = imageUrl;
   projectImage.innerHTML = " ";
-  image.style.maxWidth = "280px";
+  image.style.width = "80vw";
+  image.style.maxWidth = "1000px";
+  image.style.maxWidth = "50vw";
   image.style.margin = "0 5px 10px 0";
   image.classList.add("mdl-card", "mdl-shadow--4dp");
   image.style.padding = "5px";
@@ -305,21 +310,41 @@ function displayProjects(
   // Replace all line breaks by <br>.
   Title.innerHTML = Title.innerHTML.replace(/\n/g, "<br>");
   Description.innerHTML = Description.innerHTML.replace(/\n/g, "<br>");
+
+  // media queries 
+  var x = window.matchMedia("(max-width: 400px)");
+  mediaQuery(x);
+  x.addListener(mediaQuery);
+
+  function mediaQuery(x) {
+    if (x.matches) {
+      image.style.width = "100%";
+      image.style.maxWidth = "1000px";
+      image.style.maxWidth = "80vw";
+      div.style.width = "80vw";
+    } else {
+      image.style.width = "80vw";
+      image.style.maxWidth = "1000px";
+      image.style.maxWidth = "50vw";
+      div.style.width = "50vw";
+    }
+  }
+
   // delete a project
   if (checkSignedInWithMessage()) {
     var removeElement = div.querySelector(".remove");
-    removeElement.addEventListener("click", function(e) {
+    removeElement.addEventListener("click", function (e) {
       var askUser = prompt("Do You Want to Delete this?");
       if (askUser.toLocaleLowerCase() === "yes") {
         var iD = this.parentNode.parentNode.id;
         var refDeb = firebase.database().ref(`/projects/${iD}`);
         refDeb
           .remove()
-          .then(function() {
+          .then(function () {
             location.reload();
             console.log("Remove succeeded.");
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log("Remove failed: " + error.message);
           });
       }
@@ -341,8 +366,8 @@ function checkSetup() {
   ) {
     window.alert(
       "You have not configured and imported the Firebase SDK. " +
-        "Make sure you go through the codelab setup instructions and make " +
-        "sure you are running the codelab using `firebase serve`"
+      "Make sure you go through the codelab setup instructions and make " +
+      "sure you are running the codelab using `firebase serve`"
     );
   }
 }
