@@ -29,6 +29,11 @@ function getUserName() {
   return firebase.auth().currentUser.displayName;
 }
 
+// get email
+function getEmail() {
+  return firebase.auth().currentUser.email;
+}
+
 // Returns true if a user is signed-in.
 function isUserSignedIn() {
   return !!firebase.auth().currentUser;
@@ -39,13 +44,15 @@ function loadProjects() {
   // Loads the last 12 messages and listen for new ones.
   var callback = function (snap) {
     var data = snap.val();
+    console.log(data);
     displayProjects(
       snap.key,
       data.name,
       data.title,
       data.imageUrl,
       data.description,
-      data.profilePicUrl
+      data.profilePicUrl,
+      data.email
     );
     openModal(snap.key);
     // Delete(snap.key);
@@ -69,6 +76,7 @@ function saveProjects(projectObject) {
     .ref("/projects/")
     .push({
       name: getUserName(),
+      email: getEmail(),
       title: projectObject.projectTitle,
       imageUrl: projectObject.imageUrl,
       description: projectObject.Textarea1,
@@ -248,6 +256,8 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             <div class = "mdl-dialog__actions">
                             <div class="name">
                             </div>
+                            <div class="email">
+                            </div>
                             <div class="pic"></div>
                             <button type = "button" class = "mdl-button closeModal">CLOSE</button> 
                             <button type = "button" class = "mdl-button remove">DELETE</button> 
@@ -261,7 +271,8 @@ function displayProjects(
   title,
   imageUrl,
   description,
-  profilePicUrl
+  profilePicUrl,
+  email
 ) {
   makeCard(key, title, imageUrl);
 
@@ -286,6 +297,8 @@ function displayProjects(
   actions.style.flexDirection = "column";
   actions.style.textALign = "center";
   div.querySelector(".name").textContent = `Author ::: ${name}`;
+  div.querySelector(".email").innerHTML = `${email}`;
+  // div.querySelector(".email").style.display = "hidden";
   // div.querySelector(".name").style.fontStyle = "bold"
   div.style.border = "1.5em double orange";
   div.style.borderRadius = "1.5em";
@@ -330,23 +343,27 @@ function displayProjects(
     }
   }
 
+  var removeElement = div.querySelector(".remove");
+
+
   // delete a project
   if (checkSignedInWithMessage()) {
-    var removeElement = div.querySelector(".remove");
     removeElement.addEventListener("click", function (e) {
-      var askUser = prompt("Do You Want to Delete this?");
-      if (askUser.toLocaleLowerCase() === "yes") {
-        var iD = this.parentNode.parentNode.id;
-        var refDeb = firebase.database().ref(`/projects/${iD}`);
-        refDeb
-          .remove()
-          .then(function () {
-            location.reload();
-            console.log("Remove succeeded.");
-          })
-          .catch(function (error) {
-            console.log("Remove failed: " + error.message);
-          });
+      if (this.parentNode.querySelector(".email").textContent == getEmail()) {
+        var askUser = prompt("Do You Want to Delete this?");
+        if (askUser.toLocaleLowerCase() === "yes") {
+          var iD = this.parentNode.parentNode.id;
+          var refDeb = firebase.database().ref(`/projects/${iD}`);
+          refDeb
+            .remove()
+            .then(function () {
+              location.reload();
+              console.log("Remove succeeded.");
+            })
+            .catch(function (error) {
+              console.log("Remove failed: " + error.message);
+            });
+        }
       }
       // console.log(e, this.parentNode.parentNode.id, refDeb);
     });
