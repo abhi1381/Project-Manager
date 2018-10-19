@@ -22,6 +22,36 @@
 </head>
 
 <body>
+    <dialog class="mdl-dialog" id="dialog" style="border: 1.5em double orange !important;border-radius: 1.5em !important;width: 50vw;">
+        <h4 class="mdl-dialog__title">SUBMIT A PROJECT</h4>
+        <div class="mdl-dialog__content">
+            <form id="projectform" action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="projecttitle">Project Title</label>
+                    <input type="text" class="mdl-textfield__input" id="projecttitle" aria-describedby="projectHelp"
+                        placeholder="Enter Project title" required>
+                    <small id="projectHelp" class="form-text text-muted">Share your expressive project
+                        title</small>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="imageUrl">Project Image URL</label>
+                    <input type="url" class="mdl-textfield__input" id="imageUrl" placeholder="Url">
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-textfield__label" for="Textarea1" style="color: grey; padding-left: 15px;">Project
+                        Description</label>
+                    <textarea class="mdl-textfield__input" id="Textarea1" rows="20" required></textarea>
+                </div>
+                <button id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--white mdl-color-text--black">
+                    SUBMIT
+                </button>
+            </form>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button id="closeModal" type="button" class="mdl-button mdl-color--black" style="color: whitesmoke">CLOSE</button>
+        </div>
+    </dialog>
     <div id="container" class="demo-layout-transparent mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header mdl-color-text--black mdl-layout__header--transparent" id="header">
             <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
@@ -61,36 +91,7 @@
                         ADD PROJECT IDEAS
                     </a>
 
-                    <dialog class="mdl-dialog" id="dialog" style="border: 1.5em double orange !important;border-radius: 1.5em !important;width: 50vw;">
-                        <h4 class="mdl-dialog__title">SUBMIT A PROJECT</h4>
-                        <div class="mdl-dialog__content">
-                            <form id="projectform" action="#">
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <label class="mdl-textfield__label" for="projecttitle">Project Title</label>
-                                    <input type="text" class="mdl-textfield__input" id="projecttitle" aria-describedby="projectHelp"
-                                        placeholder="Enter Project title" required>
-                                    <small id="projectHelp" class="form-text text-muted">Share your expressive project
-                                        title</small>
-                                </div>
 
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <label class="mdl-textfield__label" for="imageUrl">Project Image URL</label>
-                                    <input type="url" class="mdl-textfield__input" id="imageUrl" placeholder="Url">
-                                </div>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                                    <label class="mdl-textfield__label" for="Textarea1" style="color: grey; padding-left: 15px;">Project
-                                        Description</label>
-                                    <textarea class="mdl-textfield__input" id="Textarea1" rows="20" required></textarea>
-                                </div>
-                                <button id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--white mdl-color-text--black">
-                                    SUBMIT
-                                </button>
-                            </form>
-                        </div>
-                        <div class="mdl-dialog__actions">
-                            <button id="closeModal" type="button" class="mdl-button mdl-color--black" style="color: whitesmoke">CLOSE</button>
-                        </div>
-                    </dialog>
                 </div>
             </div>
             <div class="divider"></div>

@@ -184,6 +184,13 @@ main {
     border-radius: 50px;
     margin: 20px;
     border: 2px groove orange;
+    perspective: 1000;
+    transform-style: preserve-3d;
+    transition-duration: 2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0.5s;
+    transform: rotateY(360deg);
+    box-shadow: -5px 5px 5px rgb(199, 91, 91);
 }
 
 .mdl-dialog.bigDialog::backdrop {
