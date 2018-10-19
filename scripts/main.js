@@ -44,7 +44,7 @@ function loadProjects() {
   // Loads the last 12 messages and listen for new ones.
   var callback = function (snap) {
     var data = snap.val();
-    console.log(data);
+    // console.log(data);
     displayProjects(
       snap.key,
       data.name,
@@ -194,7 +194,7 @@ var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
 var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--6dp mdl-cell mdl-cell--6-col">
                         <div class="mdl-card__title mdl-card--expand smallTitle"></div>
                         <div class="mdl-card__actions">
-                        <button class="readMore mdl-button mdl-color--black" style="color: white">READ MORE...</button>
+                        <button class="readMore mdl-button mdl-color--white" style="color: black;border: 3px dashed black; border-radius: 10px;">READ MORE...</button>
                         </div>
                         </div>`;
 
@@ -260,7 +260,7 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             </div>
                             <div class="pic"></div>
                             <button type = "button" class = "mdl-button closeModal">CLOSE</button> 
-                            <button type = "button" class = "mdl-button remove">DELETE</button> 
+                            <button type = "button" class = "mdl-button mdl-color--red remove">DELETE</button> 
                             </div> 
                             </dialog>`;
 

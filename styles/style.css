@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
 /* special icons */
 .icons8-google {
     /* display: inline-block; */
@@ -8,32 +10,133 @@
     margin: 5px;
 }
 
+#typed1 {
+    font-size: 3.0em;
+    font-family: 'Lobster',
+    cursive;
+    color: rgba(36, 34, 24, 0.719);
+    letter-spacing: 10px;
+    font-weight: 100 !important;
+}
+
+.mdl-textfield {
+    width: 100%;
+    max-width: 100%;
+}
+
+.mdl-textfield__label {
+    color: rgb(39, 51, 57) !important;
+    font-family: Montserrat,
+        sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 18px !important;
+    margin-bottom: 8px !important;
+}
+
+.mdl-textfield__input {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 56px;
+    font-family: "Nunito Sans",
+        sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: rgb(39, 51, 57);
+    background-color: rgb(200, 248, 240);
+    border-radius: 3px;
+    outline: none;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}
+
+#Textarea1 {
+    height: 300px;
+}
+
 body,
 html {
     height: 100%;
+    background: rgba(241, 233, 233, 0.712);
+
+
+}
+
+#header {
+    position: fixed;
+    background-color: black;
+}
+
+#header div {
+    color: white;
 }
 
 .divider {
-    border-bottom: 5px ridge rgba(0, 0, 0, 0.233);
+    border-bottom: 2px dashed rgb(0, 0, 0);
     width: 100%;
 }
 
 main {
     display: block !important;
+    position: relative;
+    margin-top: 100px;
+}
+
+.mdl-button:hover {
+    background: silver !important;
+    transform: scale(1.1);
+}
+
+
+
+#card .mdl-card__title {
+    background: #c31432;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, orange, yellow);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, orange, yellow);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 #sign-in {
     display: flex;
     border: 2px dashed black;
     border-radius: 10px;
+    background-color: brown;
     /* flex-direction: column; */
+}
+
+#sign-in:hover {
+    background: blueviolet !important;
+}
+
+#sign-out {
+    border: 2px dashed black;
+    border-radius: 10px;
+    /* flex-direction: column; */
+}
+
+#user-name {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#user-pic {
+    border: 2px groove black;
 }
 
 #logo {
     max-width: 25vw;
-    padding-right: 10px;
-    min-width: 20vw;
-    max-height: 62px;
+    margin-right: 10px;
+    min-width: 187px;
+    max-height: 50px;
+    min-height: 54px;
+    border: 2px dashed rgb(255, 255, 255);
+    border-radius: 10px;
 }
 
 
@@ -41,7 +144,7 @@ main {
     left: 20vw !important;
     max-width: 150px;
     background: white;
-    color: black;
+    color: black !important;
     border: 2px groove black;
     border-radius: 20px;
 }
@@ -74,6 +177,40 @@ main {
 .demo-card-image.mdl-card {
     padding: 10px;
     border-radius: 5px;
+}
+
+.demo-card-image.mdl-card:hover {
+    padding: 10px;
+    border-radius: 50px;
+    margin: 20px;
+    border: 2px groove orange;
+}
+
+.mdl-dialog.bigDialog::backdrop {
+    background: #232526;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #4143457c, #23252667);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #4143457c, #23252667);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.mdl-button.closeModal:hover {
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.mdl-button.remove:hover {
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background: #1a2a6c !important;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c) !important;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c) !important;
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin-top: 5px;
 }
 
 .mdl-card__supporting-text {
@@ -134,7 +271,13 @@ main {
     padding: 5px;
 }
 
-
+.mdl-dialog__actions .name,
+.mdl-dialog__actions .email {
+    font-family: 'Lobster',
+    cursive;
+    font-size: 16px;
+    font-weight: 200;
+}
 
 /* .mdl-card__actions #dialog {
     border: 1.5em double orange !important;
@@ -164,6 +307,21 @@ main {
         background-size: 33px;
     }
 
+    #tt1 h4 {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tt1 h4 b {
+        margin-left: 100px;
+        font-size: 1.05em;
+        align-self: center;
+    }
+
+    #user-container #user-name {
+        color: black;
+    }
+
 }
 
 @media screen and (max-width: 510px) {
@@ -175,5 +333,20 @@ main {
         font-size: 2.3em;
         font-family: cursive;
         margin: auto;
+    }
+
+    #tt1 h4 {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #tt1 h4 b {
+        margin-left: 100px;
+        font-size: 1.05em;
+        align-self: center;
+    }
+
+    #user-container #user-name {
+        color: black;
     }
 }
