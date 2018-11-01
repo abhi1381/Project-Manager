@@ -122,11 +122,12 @@ main {
 }
 
 #user-name {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: x-large !important;
 }
 
 #user-pic {
-    border: 2px groove black;
+    border: 3px groove rgb(255, 255, 255);
 }
 
 #logo {
@@ -176,21 +177,14 @@ main {
 
 .demo-card-image.mdl-card {
     padding: 10px;
-    border-radius: 5px;
 }
 
 .demo-card-image.mdl-card:hover {
     padding: 10px;
     border-radius: 50px;
     margin: 20px;
-    border: 2px groove orange;
-    perspective: 1000;
-    transform-style: preserve-3d;
-    transition-duration: 2s;
-    transition-timing-function: ease-in-out;
-    transition-delay: 0.5s;
-    transform: rotateY(360deg);
-    box-shadow: -5px 5px 5px rgb(199, 91, 91);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .mdl-dialog.bigDialog::backdrop {

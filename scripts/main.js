@@ -55,6 +55,7 @@ function loadProjects() {
       data.email
     );
     openModal(snap.key);
+    openComModal(snap.key);
     // Delete(snap.key);
   };
 
@@ -195,6 +196,8 @@ var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--6dp md
                         <div class="mdl-card__title mdl-card--expand smallTitle"></div>
                         <div class="mdl-card__actions">
                         <button class="readMore mdl-button mdl-color--white" style="color: black;border: 3px dashed black; border-radius: 10px;">READ MORE...</button>
+                        <button class = "comments mdl-button mdl-color--silver"
+                        style = "color: white;border: 3px dashed black; border-radius: 10px;">COMMENTS</button>
                         </div>
                         </div>`;
 
@@ -214,6 +217,8 @@ function makeCard(key, title, imageUrl) {
       div.style.margin = "5px";
       div.style.minHeight = "300px";
       div.style.background = "url(" + imageUrl + ") center/cover no-repeat";
+      div.style.backgroundOrigin = "content-box";
+      div.style.backgroundColor = "whitesmoke";
       div.setAttribute(
         "class",
         `${key} demo-card-image mdl-card mdl-shadow--6dp mdl-cell--6-col`
@@ -242,6 +247,7 @@ function openModal(key) {
     }
     dialog.querySelector(".closeModal").addEventListener("click", function () {
       dialog.close();
+      // location.reload();
     });
   });
 }
@@ -251,7 +257,7 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             <h4 class = "mdl-dialog__title title"></h4>
                             <div class="projectImage"></div> 
                             <div class = "mdl-dialog__content">
-                            <p class="description"></p> 
+                            <p class="description"></p>
                             </div> 
                             <div class = "mdl-dialog__actions">
                             <div class="name">
@@ -260,9 +266,13 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             </div>
                             <div class="pic"></div>
                             <button type = "button" class = "mdl-button closeModal">CLOSE</button> 
-                            <button type = "button" class = "mdl-button mdl-color--red remove">DELETE</button> 
+                            <button type = "button" class = "mdl-button mdl-color--red remove">DELETE</button>
                             </div> 
                             </dialog>`;
+
+
+
+
 
 // Displays  in the UI.
 function displayProjects(
@@ -274,7 +284,21 @@ function displayProjects(
   profilePicUrl,
   email
 ) {
+
+
+  // if (!firebase.database().ref(`/projects/${key}/comments/`)) {
+  //   firebase.database().ref(`/projects/${key}`)
+  //     .update({
+  //       comments: [{
+  //         name: "vfdvbdv"
+  //       }]
+  //     }).catch(function (error) {
+  //       console.error("Error writing new message to Firebase Database", error);
+  //     });
+  // }
+
   makeCard(key, title, imageUrl);
+  commentsModal(key,title,name,email);
 
   var div = document.getElementById(key);
   // If an element for that message does not exists yet we create it.
@@ -369,10 +393,45 @@ function displayProjects(
     });
   }
 
+  // // add comments
+  // var ctemp = div.querySelector(".ctemp");
+  // var commentsArea = div.querySelector(".commentsArea");
+  // var cForm = div.querySelector(".cForm");
+  // var post = div.querySelector(".post");
+  // console.log(commentsArea, cForm);
+
+
+  // post.addEventListener("click", function (e) {
+  //   console.log(e);
+  //   var comId = e.srcElement.offsetParent.id;
+  //   var commentsObject = {
+  //     comment: e.srcElement.parentElement[0].value,
+  //     email: getEmail()
+  //   };
+  //   firebase.database().ref(`/projects/${comId}/comments/`)
+  //     .push(commentsObject).then(function (e) {
+  //       ctemp.setAttribute("id", `${e.key}`);
+  //       console.log(e);
+  //       commentsArea.value = " ";
+  //       location.reload();
+  //     })
+  //     .catch(function (error) {
+  //       console.error("Error writing new message to Firebase Database", error);
+  //     });
+
+  //   // for (var prop in comments) {
+  //   //   if (prop == this.pare )
+  //   // }
+  // });
+
+
+
   url.focus();
   Textarea1.focus();
   projectTitle.focus();
+  // commentsArea.focus();
 }
+
 
 // Checks that the Firebase SDK has been correctly setup and configured.
 function checkSetup() {
@@ -415,10 +474,12 @@ signInButtonElement.addEventListener("click", signIn);
 projectform.addEventListener("submit", onProjectFormSubmit);
 closeModal.addEventListener("click", makeCard);
 
-// delete listener
+
 
 // initialize Firebase
 initFirebaseAuth();
 
 // We load currently existing projects and listen to new ones.
 loadProjects();
+
+// commentsSubmition();
