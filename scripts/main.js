@@ -69,6 +69,7 @@ function loadProjects() {
     .on("child_changed", callback);
 }
 
+
 // Saves a new project on the Firebase DB.
 function saveProjects(projectObject) {
   // Add a new message entry to the Firebase Database.
@@ -165,6 +166,8 @@ function resetMaterialTextfield(element) {
   element.url.parentNode.MaterialTextfield.boundUpdateClassesHandler();
   element.Textarea1.value = " ";
   element.Textarea1.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+  element.comArea.value = " ";
+  element.comArea.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 }
 
 // modals and cards
@@ -298,7 +301,7 @@ function displayProjects(
   // }
 
   makeCard(key, title, imageUrl);
-  commentsModal(key,title,name,email);
+  commentsModal(key,title,name,profilePicUrl);
 
   var div = document.getElementById(key);
   // If an element for that message does not exists yet we create it.
