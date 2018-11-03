@@ -33,9 +33,7 @@ var commentsDialog = `<dialog>
                     rows = "5" placeholder="ADD YOUR COMMENT"
                     required></textarea> 
                     </div>
-                    <button type = "button"
-                    class = "mdl-button mdl-color--black mdl-color-text--white removeComment">REMOVE</button>
-                    <button type = "submit" class = "mdl-button mdl-color--white submitComment">SUBMIT</button>
+                    <button type = "submit" class = "mdl-button mdl-color--white submitComment" style="border: 3px dashed black">SUBMIT</button>
                     </form>
                     </div> 
                     <div class = "mdl-dialog__actions">
@@ -54,6 +52,12 @@ var commentsTemp = `<div class="mdl-grid" style="padding-left: 0">
                     <div class="mdl-cell mdl-cell--12-col commentsCard">
                     </div> 
                     </div>
+                    <button type = "button"
+                    class = "mdl-button mdl-color--black mdl-color-text--white removeComment"
+                    style = "width: inherit;
+                    background-color: white !important;
+                    color: orange !important;
+                    border: 2px dashed;">REMOVE</button>
                     </div>
                     </div>`;
 
@@ -79,9 +83,8 @@ function commentsModal(key, title, name, profilePicUrl) {
     console.log(commentsTempArea);
     loadComments(commentsTempArea);
     var comArea = div.querySelector(".comArea");
-    console.log(comArea);
     var cForm = div.querySelector(".cForm");
-    console.log(cForm);
+    // submit comments to db and display
     cForm.addEventListener("submit", function () {
         // console.log(comArea.value,this);
         // Check that the user entered a message and is signed in.
@@ -100,6 +103,9 @@ function commentsModal(key, title, name, profilePicUrl) {
 
 }
 
+function deleteComments() {
+
+}
 
 function openComModal(key) {
     "use strict";
@@ -164,6 +170,27 @@ function displayComments(key, name, profilePicUrl, comArea, title, commentsTempA
         commentsCard.style.wordBreak = "break-all";
         commentsTempArea.style.maxHeight = "550px";
         commentsTempArea.style.overflow = "auto";
+
+
+        // delete comments
+        if (checkSignedInWithMessage()) {
+            div.querySelector(".removeComment").addEventListener("click", function (e) {
+                console.log(e);
+                var biUrl = window.getComputedStyle(this.parentNode.parentNode.querySelector(".pic"), false).backgroundImage.slice(4, -1).replace(/"/g, "");
+                var iD = this.parentNode.parentNode.id;
+                if (getProfilePicUrl() === biUrl) {
+                    firebase.database().ref(`/comments/${iD}`).remove().then(function () {
+                            location.reload();
+                            console.log("Remove succeeded.");
+                        })
+                        .catch(function (error) {
+                            console.log("Remove failed: " + error.message);
+                        });
+                }
+
+            });
+        }
+
     }
 
 

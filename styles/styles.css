@@ -11,12 +11,17 @@
 }
 
 #typed1 {
-    font-size: 3.0em;
+    font-size: 2.0em;
     font-family: 'Lobster',
-    cursive;
+        cursive;
     color: rgba(36, 34, 24, 0.719);
-    letter-spacing: 10px;
-    font-weight: 100 !important;
+    letter-spacing: 5px;
+    display: flex !important;
+    flex-direction: row !important;
+    margin: 0 auto;
+    text-align: center !important;
+    justify-content: center;
+    flex-wrap: wrap-reverse;
 }
 
 .mdl-textfield {
@@ -184,7 +189,7 @@ main {
     border-radius: 50px;
     margin: 20px;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.19),
-    0 6px 6px rgba(0, 0, 0, 0.23);
+        0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .mdl-dialog.bigDialog::backdrop {
@@ -275,7 +280,7 @@ main {
 .mdl-dialog__actions .name,
 .mdl-dialog__actions .email {
     font-family: 'Lobster',
-    cursive;
+        cursive;
     font-size: 16px;
     font-weight: 200;
 }
@@ -351,3 +356,4 @@ main {
         color: black;
     }
 }
+

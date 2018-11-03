@@ -1,12 +1,37 @@
-  var typed1 = new Typed('#typed1', {
-      strings: ['<strong>CREATE <i class="material-icons">create</i></strong>', '<strong>SHARE<i class="material-icons">share</i></strong>', '<strong>EXPLORE<i class="material-icons">explore</i></strong>'],
-      typeSpeed: 100,
-      backSpeed: 500,
-      fadeOut: true,
-      loop: true,
-      showCursor: false
-  });
+setTimeout(function () {
+    // var create = document.querySelector(".create");
+    $("#create").typed({
+        strings: ["CREATE"],
+        typeSpeed: 30, // typing speed
+        backDelay: 750, // pause before backspacing
+        loop: false, // loop on or off (true or false)
+        loopCount: false, // number of loops, false = infinite
+        callback: function () {} // call function after typing is done
+    });
+}, 0);
 
+setTimeout(function () {
+    // var share = document.querySelector(".share");
+    $("#share").css("display", "inherit");
+    $("#share").typed({
+        strings: ["SHARE"],
+        typeSpeed: 30, // typing speed
+        backDelay: 750, // pause before backspacing
+        loop: false, // loop on or off (true or false)
+        loopCount: false, // number of loops, false = infinite
+        callback: function () {} // call function after typing is done
+    });
+}, 2000);
 
-
-
+setTimeout(function () {
+    // var explore = document.querySelector(".explore");
+    $(".explore").css("display", "inherit");
+    $("#explore").typed({
+        strings: ["EXPLORE"],
+        typeSpeed: 30, // typing speed
+        backDelay: 750, // pause before backspacing
+        loop: false, // loop on or off (true or false)
+        loopCount: false, // number of loops, false = infinite
+        callback: function () {} // call function after typing is done
+    });
+}, 4000);
