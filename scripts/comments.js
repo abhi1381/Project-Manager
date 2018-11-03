@@ -76,6 +76,7 @@ function commentsModal(key, title, name, profilePicUrl) {
         }
     }
     var commentsTempArea = div.querySelector(".commentsTempArea");
+    console.log(commentsTempArea);
     loadComments(commentsTempArea);
     var comArea = div.querySelector(".comArea");
     console.log(comArea);
@@ -132,35 +133,39 @@ function openComModal(key) {
 
 
 function displayComments(key, name, profilePicUrl, comArea, title, commentsTempArea) {
+    // console.log(commentsTempArea.parentNode.querySelector("h5").textContent);
     var div = document.getElementById(key);
-    if(!div) {
-        var container = document.createElement("div");
-        container.innerHTML = commentsTemp;
-        div = container.firstChild;
-        div.setAttribute("id",key);
-        commentsTempArea.appendChild(div);
-    }
-    if (profilePicUrl) {
-        div.querySelector(".pic").style.background =
-            "url(" + profilePicUrl + ") 10% 10% / 20px no-repeat";
-        div.querySelector(".pic").style.width = "36px";
-        div.querySelector(".pic").style.height = "36px";
-        div.querySelector(".pic").style.backgroundSize = "36px";
-        div.querySelector(".pic").style.borderRadius = "18px";
-    }
-     div.querySelector(".name").textContent = `${name}`;
-     div.querySelector(".name").style.color = "black";
-     var commentsCard = div.querySelector(".commentsCard");
-     commentsCard.textContent = `${comArea}`;
-     commentsCard.style.border = "2px dashed white";
-     commentsCard.style.backgroundColor = "black";
-     commentsCard.style.color = "white";
-     commentsCard.style.boxShadow = `0 30px 60px rgba(0, 0, 0, 0.19),
+    if (title == commentsTempArea.parentNode.querySelector("h5").textContent) {
+        if (!div) {
+            var container = document.createElement("div");
+            container.innerHTML = commentsTemp;
+            div = container.firstChild;
+            div.setAttribute("id", key);
+            commentsTempArea.appendChild(div);
+        }
+        if (profilePicUrl) {
+            div.querySelector(".pic").style.background =
+                "url(" + profilePicUrl + ") 10% 10% / 20px no-repeat";
+            div.querySelector(".pic").style.width = "36px";
+            div.querySelector(".pic").style.height = "36px";
+            div.querySelector(".pic").style.backgroundSize = "36px";
+            div.querySelector(".pic").style.borderRadius = "18px";
+        }
+        div.querySelector(".name").textContent = `${name}`;
+        div.querySelector(".name").style.color = "black";
+        var commentsCard = div.querySelector(".commentsCard");
+        commentsCard.textContent = `${comArea}`;
+        commentsCard.style.border = "2px dashed white";
+        commentsCard.style.backgroundColor = "black";
+        commentsCard.style.color = "white";
+        commentsCard.style.boxShadow = `0 30px 60px rgba(0, 0, 0, 0.19),
      0 6 px 6 px rgba(0, 0, 0, 0.23)`;
-     commentsCard.style.padding = "5px";
-     commentsCard.style.wordBreak = "break-all";
-     commentsTempArea.style.maxHeight = "550px";
-     commentsTempArea.style.overflow = "auto";
+        commentsCard.style.padding = "5px";
+        commentsCard.style.wordBreak = "break-all";
+        commentsTempArea.style.maxHeight = "550px";
+        commentsTempArea.style.overflow = "auto";
+    }
+
 
 }
 
