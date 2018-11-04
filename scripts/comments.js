@@ -103,9 +103,6 @@ function commentsModal(key, title, name, profilePicUrl) {
 
 }
 
-function deleteComments() {
-
-}
 
 function openComModal(key) {
     "use strict";

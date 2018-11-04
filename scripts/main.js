@@ -214,7 +214,12 @@ function makeCard(key, title, imageUrl) {
       var smallTitle = div.querySelector(".smallTitle");
       smallTitle.textContent = title;
       smallTitle.style.color = "white";
+      smallTitle.style.background = "black";
       smallTitle.style.fontWeight = "600";
+      smallTitle.style.width = "fit-content";
+      smallTitle.style.maxHeight = "50px";
+      smallTitle.style.borderRadius = "10px";
+      smallTitle.style.border = "2px solid white";
       smallTitle.style.fontSize = "2em";
       smallTitle.style.textDecoration = "underline";
       div.style.margin = "5px";
