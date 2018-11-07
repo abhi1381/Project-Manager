@@ -25,6 +25,7 @@
     <dialog class="mdl-dialog" id="dialog" style="border: 1.5em double orange !important;border-radius: 1.5em !important;width: 50vw;">
         <h4 class="mdl-dialog__title">SUBMIT A PROJECT</h4>
         <div class="mdl-dialog__content">
+
             <form id="projectform" action="#">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <label class="mdl-textfield__label" for="projecttitle">Project Title</label>
@@ -37,10 +38,25 @@
                     <label class="mdl-textfield__label" for="imageUrl">Project Image URL</label>
                     <input type="url" class="mdl-textfield__input" id="imageUrl" placeholder="Url">
                 </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" id="mce">
                     <label class="mdl-textfield__label" for="Textarea1" style="color: grey; padding-left: 15px;">Project
                         Description</label>
-                    <textarea class="mdl-textfield__input" id="Textarea1" rows="20" required></textarea>
+                    <textarea class="mdl-textfield__input" id="Textarea1" rows="10" required></textarea>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="gitUrl">Github Repository link of Your Project</label>
+                    <input type="url" class="mdl-textfield__input" id="gitUrl" placeholder="Url">
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label" for="docsUrl">Google docs iframe src attribute link</label>
+                    <input type="url" class="mdl-textfield__input" id="docsUrl" placeholder="Url">
+                    <!-- Multiline Tooltip -->
+                    
+                    <div class="mdl-tooltip mdl-tooltip--large" for="docsUrl">
+                        <li>Go to your google docs project</li>
+                        <li>Navigate to file section in the toolbar and then click on Publish to the web</li>
+                        <li>Navigate to the embed section and copy the src value of the iframe</li>
+                    </div>
                 </div>
                 <button id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--white mdl-color-text--black">
                     SUBMIT
@@ -75,7 +91,6 @@
             </div>
         </header>
         <div class="divider"></div>
-
         <main class="mdl-layout__content">
             <div class="demo-card-wide mdl-card mdl-shadow--4dp" id="card">
                 <div class="mdl-card__title  mdl-color--orange-800" style="margin: 10px; border-radius: 10px 10px 0px 0px;">
@@ -87,10 +102,10 @@
                     <strong id="share"></strong>
                     <strong id="explore"></strong>
                 </div>
-                <div class="mdl-card__actions mdl-card--border">
+                <div class="mdl-card__actions mdl-card--border addProjectContainer">
                     <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--white"
                         style="color: rgb(0, 0, 0); border: 3px dashed black; border-radius: 15px;" id="show-dialog">
-                        ADD PROJECT IDEAS
+                        ADD PROJECT
                     </a>
                 </div>
             </div>
@@ -121,6 +136,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js"></script>
     <script src="scripts/main.js"></script>
     <script src="scripts/styles.js"></script>

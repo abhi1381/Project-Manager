@@ -52,7 +52,9 @@ function loadProjects() {
       data.imageUrl,
       data.description,
       data.profilePicUrl,
-      data.email
+      data.email,
+      data.gitUrl,
+      data.docsUrl
     );
     openModal(snap.key);
     openComModal(snap.key);
@@ -82,7 +84,9 @@ function saveProjects(projectObject) {
       title: projectObject.projectTitle,
       imageUrl: projectObject.imageUrl,
       description: projectObject.Textarea1,
-      profilePicUrl: getProfilePicUrl()
+      profilePicUrl: getProfilePicUrl(),
+      gitUrl: projectObject.gitUrl,
+      docsUrl: projectObject.docsUrl
     })
     .catch(function (error) {
       console.error("Error writing new message to Firebase Database", error);
@@ -96,13 +100,17 @@ function onProjectFormSubmit(e) {
     saveProjects({
       projectTitle: projectTitle.value,
       imageUrl: url.value,
-      Textarea1: Textarea1.value
+      Textarea1: Textarea1.value,
+      gitUrl: gitUrl.value,
+      docsUrl: docsUrl.value
     }).then(function () {
       // Clear message text field and re-enable the SEND button.
       resetMaterialTextfield({
         projectTitle,
         url,
-        Textarea1
+        Textarea1,
+        gitUrl,
+        docsUrl
       });
     });
   }
@@ -168,6 +176,10 @@ function resetMaterialTextfield(element) {
   element.Textarea1.parentNode.MaterialTextfield.boundUpdateClassesHandler();
   element.comArea.value = " ";
   element.comArea.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+  element.gitUrl.value = " ";
+  element.gitUrl.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+  element.docsUrl.value = " ";
+  element.docsUrl.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 }
 
 // modals and cards
@@ -184,7 +196,7 @@ var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
   }
 
   dialogButton.addEventListener("click", function () {
-    if (checkSignedInWithMessage()) {
+    if (isUserSignedIn()) {
       dialog.showModal();
     }
   });
@@ -195,7 +207,7 @@ var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
 })();
 
 // show project dialog
-var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--6dp mdl-cell mdl-cell--6-col">
+var smallCardTemplate = `<div class="demo-card-image mdl-card mdl-shadow--16dp mdl-cell mdl-cell--6-col">
                         <div class="mdl-card__title mdl-card--expand smallTitle"></div>
                         <div class="mdl-card__actions">
                         <button class="readMore mdl-button mdl-color--white" style="color: black;border: 3px dashed black; border-radius: 10px;">READ MORE...</button>
@@ -266,6 +278,23 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
                             <div class="projectImage"></div> 
                             <div class = "mdl-dialog__content">
                             <p class="description"></p>
+                            <div class = "mdl-card mdl-shadow--6dp gitLink" >
+                            <a href = "#" target = "_blank">CHECK THE COMPLETE SOURCE CODE ON GITHUB</a>
+                            <div class="divider"></div>
+                            <p>GITHUB<i class = "material-icons">
+                            code</i></p >
+                            </div>
+                            <div class = "mdl-card mdl-shadow--6dp iframeLink">
+                            <iframe class="iframeEmbed"
+                            style="width: -webkit-fill-available; height:-webkit-fill-available "
+                            title="iframe1"
+                            frameborder="0"
+                            scrolling="yes"
+                            marginheight="0"
+                            marginwidth="0" 
+                            src="">
+                            </iframe>
+                            </div>
                             </div> 
                             <div class = "mdl-dialog__actions">
                             <div class="name">
@@ -280,8 +309,6 @@ var readMoreDialogTemplate = `<dialog class = "mdl-dialog bigDialog">
 
 
 
-
-
 // Displays  in the UI.
 function displayProjects(
   key,
@@ -290,7 +317,9 @@ function displayProjects(
   imageUrl,
   description,
   profilePicUrl,
-  email
+  email,
+  gitUrl,
+  docsUrl
 ) {
 
 
@@ -330,8 +359,6 @@ function displayProjects(
   actions.style.textALign = "center";
   div.querySelector(".name").textContent = `Author ::: ${name}`;
   div.querySelector(".email").innerHTML = `${email}`;
-  // div.querySelector(".email").style.display = "hidden";
-  // div.querySelector(".name").style.fontStyle = "bold"
   div.style.border = "1.5em double orange";
   div.style.borderRadius = "1.5em";
   div.style.width = "50vw";
@@ -350,8 +377,11 @@ function displayProjects(
   image.style.maxWidth = "50vw";
   image.style.margin = "0 5px 10px 0";
   image.classList.add("mdl-card", "mdl-shadow--4dp");
-  image.style.padding = "5px";
+  image.style.padding = "10px";
   projectImage.appendChild(image);
+  // links and embeds
+  div.querySelector(".gitLink").querySelector("a").href = gitUrl; 
+  div.querySelector(".iframeLink").querySelector("iframe").src = docsUrl; 
   // Replace all line breaks by <br>.
   Title.innerHTML = Title.innerHTML.replace(/\n/g, "<br>");
   Description.innerHTML = Description.innerHTML.replace(/\n/g, "<br>");
@@ -401,36 +431,7 @@ function displayProjects(
     });
   }
 
-  // // add comments
-  // var ctemp = div.querySelector(".ctemp");
-  // var commentsArea = div.querySelector(".commentsArea");
-  // var cForm = div.querySelector(".cForm");
-  // var post = div.querySelector(".post");
-  // console.log(commentsArea, cForm);
 
-
-  // post.addEventListener("click", function (e) {
-  //   console.log(e);
-  //   var comId = e.srcElement.offsetParent.id;
-  //   var commentsObject = {
-  //     comment: e.srcElement.parentElement[0].value,
-  //     email: getEmail()
-  //   };
-  //   firebase.database().ref(`/projects/${comId}/comments/`)
-  //     .push(commentsObject).then(function (e) {
-  //       ctemp.setAttribute("id", `${e.key}`);
-  //       console.log(e);
-  //       commentsArea.value = " ";
-  //       location.reload();
-  //     })
-  //     .catch(function (error) {
-  //       console.error("Error writing new message to Firebase Database", error);
-  //     });
-
-  //   // for (var prop in comments) {
-  //   //   if (prop == this.pare )
-  //   // }
-  // });
 
 
 
@@ -473,6 +474,8 @@ var url = document.getElementById("imageUrl");
 var Textarea1 = document.getElementById("Textarea1");
 var projectTitle = document.getElementById("projecttitle");
 var projectform = document.querySelector("#projectform");
+var gitUrl = document.querySelector("#gitUrl");
+var docsUrl = document.querySelector("#docsUrl");
 
 // auth
 signOutButtonElement.addEventListener("click", signOut);

@@ -61,7 +61,7 @@
 }
 
 #Textarea1 {
-    height: 300px;
+    height: 100px;
 }
 
 body,
@@ -225,6 +225,66 @@ main {
     line-height: 1.2;
 }
 
+.mdl-card.gitLink {
+    width: auto;
+    min-height: auto;
+    padding: inherit;
+    border-radius: 20px;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.mdl-card.gitLink p {
+    font-size: 2em;
+    font-weight: bolder;
+}
+
+.mdl-card.gitLink .divider {
+    border: 2px solid silver;
+    margin-top: 5px;
+}
+
+.mdl-card.gitLink a {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: black;
+    text-decoration: none;
+}
+
+.mdl-card.gitLink a:hover {
+    font-family: cursive;
+    color: blue;
+    text-decoration: underline;
+}
+
+.mdl-card.iframeLink {
+    width: auto;
+    border-radius: 20px;
+}
+
+div[for="docsUrl"] {
+    line-height: 14px;
+    font-size: 14px;
+    padding: 16px;
+    width: -webkit-fill-available !important;
+    background: rgb(200, 248, 240);
+    color: black;
+    /* height: 20px !important; */
+    list-style: cadetblue;
+    border: 2px dashed black;
+    border-radius: 10px;
+    min-height: 50px;
+    max-height: 100px;
+    height: 80px;
+    min-width: 300px;
+    width: 300px;
+    line-height: 1.3em;
+    word-spacing: 5px;
+    font-family: cursive;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.507),
+    0 6px 6px rgba(0, 0, 0, 0.384);
+    text-shadow: 1px 2px 5px silver;
+}
+
 .mdl-grid {
     max-width: 1024px;
     margin: auto;
@@ -356,4 +416,3 @@ main {
         color: black;
     }
 }
-

@@ -35,3 +35,6 @@ setTimeout(function () {
         callback: function () {} // call function after typing is done
     });
 }, 4000);
+
+
+// UI modifiers
