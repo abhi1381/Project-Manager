@@ -36,5 +36,20 @@ setTimeout(function () {
     });
 }, 4000);
 
+var nav = document.querySelector('#header');
+var divnav = document.querySelector('#header div');
+nav.style.color = "white !important";
 
 // UI modifiers
+window.onscroll = (e) => {
+    console.log(e);
+    
+    console.log(nav,this.scrollY);
+    if (this.scrollY <= 20) {
+        nav.className = 'mdl-layout__header mdl-color-text--white';
+        nav.style.color = "white !important";
+    } else {
+        nav.className = 'mdl-layout__header scroll';
+        divnav.style.color = "black !important";
+    }
+};

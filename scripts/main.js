@@ -234,7 +234,7 @@ function makeCard(key, title, imageUrl) {
       smallTitle.style.border = "2px solid white";
       smallTitle.style.fontSize = "2em";
       smallTitle.style.textDecoration = "underline";
-      div.style.margin = "5px";
+      // div.style.margin = "5px";
       div.style.minHeight = "300px";
       div.style.background = "url(" + imageUrl + ") center/cover no-repeat";
       div.style.backgroundOrigin = "content-box";
