@@ -32,6 +32,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="styles/style.css" />
   </head>
 
@@ -165,7 +171,7 @@
             class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop"
           >
             <h4 style="font-family: 'Courier New', Courier, monospace;">
-              <a href="#"
+              <a href="http://www.phoenix.lnmiit.ac.in/#home" target="_blank"
                 ><img id="logo" src="images/phoenix.jpeg" alt="Phoenix"/></a
               ><b>Projects</b>
             </h4>
@@ -201,11 +207,12 @@
       </header>
       <div class="divider"></div>
       <main class="mdl-layout__content">
-        <div
-          class="logo"
-          style="margin-left: 35%;margin-right: 35%;"
-        >
-          <img class="mdl-shadow--16dp" src="images/download.png" alt="LNMIIT" />
+        <div class="logo" style="margin-left: 35%;margin-right: 35%;">
+          <img
+            class="mdl-shadow--16dp"
+            src="images/download.png"
+            alt="LNMIIT"
+          />
         </div>
         <div class="demo-card-wide mdl-card mdl-shadow--16dp" id="card">
           <div
@@ -236,73 +243,96 @@
       </main>
       <div class="mdl-grid" id="cardGrid"></div>
       <footer class="mdl-mega-footer mdl-color--black mdl-color-text--white">
-        <div class="mdl-mega-footer__middle-section">
-          <div class="mdl-mega-footer__drop-down-section">
-            <input
-              class="mdl-mega-footer__heading-checkbox"
-              type="checkbox"
-              checked
-            />
-            <h1 class="mdl-mega-footer__heading">Features</h1>
-            <ul class="mdl-mega-footer__link-list">
-              <li><a href="#">About</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Updates</a></li>
-            </ul>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--4-col">
+            <div class="mdl-mega-footer__drop-down-section">
+              <input
+                class="mdl-mega-footer__heading-checkbox"
+                type="checkbox"
+                checked
+              />
+              <h1 class="mdl-mega-footer__heading">Links</h1>
+              <ul class="mdl-mega-footer__link-list">
+                <li>
+                  <a href="http://www.phoenix.lnmiit.ac.in/#home">HOME</a>
+                </li>
+                <li>
+                  <a href="http://www.phoenix.lnmiit.ac.in/#about">ABOUT</a>
+                </li>
+                <li>
+                  <a href="http://www.phoenix.lnmiit.ac.in/#events">EVENTS</a>
+                </li>
+                <li>
+                  <a href="https://auth-caadb.firebaseapp.com/" active
+                    >PROJECTS</a
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
-
-          <div class="mdl-mega-footer__drop-down-section">
-            <input
-              class="mdl-mega-footer__heading-checkbox"
-              type="checkbox"
-              checked
-            />
-            <h1 class="mdl-mega-footer__heading">Details</h1>
-            <ul class="mdl-mega-footer__link-list">
-              <li><a href="#">Specs</a></li>
-              <li><a href="#">Tools</a></li>
-              <li><a href="#">Resources</a></li>
-            </ul>
+          <div class="mdl-cell mdl-cell--4-col">
+            <div class="mdl-mega-footer__bottom-section">
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col">
+                  <div class="mdl-logo">
+                    <a href="http://www.phoenix.lnmiit.ac.in" target="_blank">
+                      <img
+                        class="clubLogo"
+                        src="images/logo.jpg"
+                        alt="Phoenix"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--4-col"></div>
+                <div class="mdl-cell mdl-cell--4-col">
+                  <div class="mdl-logo">
+                    <a href="http://www.lnmiit.ac.in" target="_blank">
+                      <img
+                        class="clubLogo"
+                        src="images/lnmiitlogo.jpg"
+                        alt="LNMIIT"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col" style="text-align:center;">
+                  <a
+                    href="https://www.google.co.in/maps/place/LNMIIT/@26.9363461,75.9213346,17z/data=!3m1!4b1!4m5!3m4!1s0x396dba21e8a1d1c9:0x5ab565cce4d44c2b!8m2!3d26.9363461!4d75.9235233"
+                    ><span class="fa fa-map-marker"></span
+                  ></a>
+                  <br />
+                  The LNM Institute of Information Technology, <br />
+                  Rupa Ki Nanagal, Post-Sumel, <br />
+                  Jaipur, 302031
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div class="mdl-mega-footer__drop-down-section">
-            <input
-              class="mdl-mega-footer__heading-checkbox"
-              type="checkbox"
-              checked
-            />
-            <h1 class="mdl-mega-footer__heading">Technology</h1>
-            <ul class="mdl-mega-footer__link-list">
-              <li><a href="#">How it works</a></li>
-              <li><a href="#">Patterns</a></li>
-              <li><a href="#">Usage</a></li>
-              <li><a href="#">Products</a></li>
-              <li><a href="#">Contracts</a></li>
-            </ul>
+          <div class="mdl-cell mdl-cell--4-col footerLinks">
+            <div class="mdl-grid">
+              <div class="mdl-mega-footer__bottom-section">
+                <a
+                  href="https://www.facebook.com/phoenix.lnmiit/"
+                  target="_blank"
+                  style="color: rgb(59, 89, 152);"
+                  ><span class="fab fa-facebook"></span
+                ></a>
+                &emsp;
+                <a
+                  href="https://www.youtube.com/channel/UCkgCJ_wF-E35nU_6HZGF0Sg"
+                  target="_blank"
+                  style="color: red"
+                  ><span class="fab fa-youtube"></span
+                ></a>
+                &emsp;
+                <a href="mailto:phoenixclub@lnmiit.ac.in" target="_blank" style="color: whitesmoke;"
+                  ><span class="fas fa-envelope"></span
+                ></a>
+                &emsp;
+              </div>
+            </div>
           </div>
-
-          <div class="mdl-mega-footer__drop-down-section">
-            <input
-              class="mdl-mega-footer__heading-checkbox"
-              type="checkbox"
-              checked
-            />
-            <h1 class="mdl-mega-footer__heading">FAQ</h1>
-            <ul class="mdl-mega-footer__link-list">
-              <li><a href="#">Questions</a></li>
-              <li><a href="#">Answers</a></li>
-              <li><a href="#">Contact us</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="mdl-mega-footer__bottom-section">
-          <div class="mdl-logo">Title</div>
-          <ul class="mdl-mega-footer__link-list">
-            <li><a href="#">Help</a></li>
-            <li><a href="#">Privacy & Terms</a></li>
-          </ul>
         </div>
       </footer>
     </div>
