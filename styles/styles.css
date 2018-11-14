@@ -520,3 +520,9 @@ div[for="docsUrl"] {
     transform: translatey(0px);
   }
 }
+
+@media screen and (min-width: 850px) {
+  #phin {
+    margin-left: -70px;
+  }
+}
