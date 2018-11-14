@@ -196,7 +196,7 @@ var LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
   }
 
   dialogButton.addEventListener("click", function () {
-    if (isUserSignedIn()) {
+    if (checkSignedInWithMessage()) {
       dialog.showModal();
     }
   });

@@ -80,7 +80,6 @@ function commentsModal(key, title, name, profilePicUrl) {
         }
     }
     var commentsTempArea = div.querySelector(".commentsTempArea");
-    console.log(commentsTempArea);
     loadComments(commentsTempArea);
     var comArea = div.querySelector(".comArea");
     var cForm = div.querySelector(".cForm");
@@ -172,7 +171,7 @@ function displayComments(key, name, profilePicUrl, comArea, title, commentsTempA
         // delete comments
         if (checkSignedInWithMessage()) {
             div.querySelector(".removeComment").addEventListener("click", function (e) {
-                console.log(e);
+                
                 var biUrl = window.getComputedStyle(this.parentNode.parentNode.querySelector(".pic"), false).backgroundImage.slice(4, -1).replace(/"/g, "");
                 var iD = this.parentNode.parentNode.id;
                 if (getProfilePicUrl() === biUrl) {

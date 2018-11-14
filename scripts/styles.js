@@ -42,9 +42,8 @@ nav.style.color = "white !important";
 
 // UI modifiers
 window.onscroll = (e) => {
-    console.log(e);
     
-    console.log(nav,this.scrollY);
+    
     if (this.scrollY <= 20) {
         nav.className = 'mdl-layout__header mdl-color-text--white';
         nav.style.color = "white !important";
