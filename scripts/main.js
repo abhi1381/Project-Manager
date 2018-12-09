@@ -323,17 +323,6 @@ function displayProjects(
 ) {
 
 
-  // if (!firebase.database().ref(`/projects/${key}/comments/`)) {
-  //   firebase.database().ref(`/projects/${key}`)
-  //     .update({
-  //       comments: [{
-  //         name: "vfdvbdv"
-  //       }]
-  //     }).catch(function (error) {
-  //       console.error("Error writing new message to Firebase Database", error);
-  //     });
-  // }
-
   makeCard(key, title, imageUrl);
   commentsModal(key,title,name,profilePicUrl);
 
@@ -362,6 +351,7 @@ function displayProjects(
   div.style.border = "1.5em double orange";
   div.style.borderRadius = "1.5em";
   div.style.width = "50vw";
+  div.style.top = "0";
   var Title = div.querySelector(".title");
   var Description = div.querySelector(".description");
   var image = document.createElement("img");
